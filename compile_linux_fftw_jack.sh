@@ -2,12 +2,12 @@ outfile=paulstretch
 
 rm -f $outfile
 
-fluid -c GUI.fl 
-fluid -c FreeEditUI.fl
+ntk-fluid -c GUI.fl 
+ntk-fluid -c FreeEditUI.fl
 
-g++ -ggdb GUI.cxx FreeEditUI.cxx *.cpp Input/*.cpp Output/*.cpp `fltk-config --cflags` \
- `fltk-config --ldflags` \
- -laudiofile -lfftw3f -lz -logg -lvorbis  -lvorbisenc -lvorbisfile -lportaudio -lpthread -lmad -lmxml \
+g++ -ggdb GUI.cxx FreeEditUI.cxx *.cpp Input/*.cpp Output/*.cpp `pkg-config ntk --cflags` \
+ `pkg-config ntk --libs` \
+ -laudiofile -lfftw3f -lvorbisenc -lvorbisfile -lportaudio -lpthread -lmad -lmxml \
  `pkg-config --cflags --libs jack samplerate` \
  -DHAVE_JACK -DENABLE_RESAMPLING \
  -o $outfile
