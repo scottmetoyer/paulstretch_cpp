@@ -22,8 +22,8 @@ SET(EXTERNAL_LIB_PREFIX "" CACHE PATH
 #
 # fltk is installed in the sandbox but trying to use FindFLTK/UseFLTK
 # seems to cause problems. Adding just this variable makes Fluid work
-set(FLTK_FLUID_EXECUTABLE ${EXTERNAL_LIB_PREFIX}/bin/fluid)
-include_directories(${EXTERNAL_LIB_PREFIX}/include)
+set(FLTK_FLUID_EXECUTABLE ${EXTERNAL_LIB_PREFIX}/bin/ntk-fluid)
+include_directories(BEFORE "${EXTERNAL_LIB_PREFIX}/include/ntk" "${EXTERNAL_LIB_PREFIX}/include")
 link_directories(${EXTERNAL_LIB_PREFIX}/lib)
 else(NOT USE_SYSTEM_PREREQS)
   find_package(FLTK REQUIRED)
@@ -81,7 +81,7 @@ ELSE(APPLE)
 ENDIF(APPLE)
 
 if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
-  set(EXTRA_LIBS rt asound pthread -ldl -lXrender -lXext -lXinerama -lXcursor -lXfixes -lXft -lXpm -lX11 -lz -lfontconfig)
+  set(EXTRA_LIBS rt asound pthread dl Xrender Xext Xinerama Xcursor Xfixes Xft Xpm X11 z fontconfig)
 endif()
 
 #
@@ -94,7 +94,7 @@ add_executable(paulstretch MACOSX_BUNDLE
 # all the dependencies
 target_link_libraries(paulstretch audiofile
   fftw3f vorbisenc vorbisfile vorbis ogg portaudio pthread
-  mad fltk fltk_forms fltk_gl fltk_images mxml
+  mad ntk ntk_gl ntk_images mxml
   ${FLTK_PLATFORM_DEPENDENT_LIBS}
   ${EXTRA_LIBS}
   )

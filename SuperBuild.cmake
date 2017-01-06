@@ -43,13 +43,22 @@ if(NOT USE_SYSTEM_PREREQS)
 	 --enable-float
 	 )
 
+  # ExternalProject_add(fltk
+  # 	 URL "http://fltk.org/pub/fltk/1.3.4/fltk-1.3.4-1-source.tar.gz"
+  # 	 URL_MD5 d7fcd27ab928648e1a1366dd2e273970
+  # 	 UPDATE_COMMAND ""
+  # 	 BUILD_IN_SOURCE 1
+  # 	 CONFIGURE_COMMAND ./configure
+  # 	 --prefix=${CMAKE_CURRENT_BINARY_DIR}/Prereqs
+  # 	 )
   ExternalProject_add(fltk
-	 URL "http://fltk.org/pub/fltk/1.3.4/fltk-1.3.4-1-source.tar.gz"
-	 URL_MD5 d7fcd27ab928648e1a1366dd2e273970
+	 GIT_REPOSITORY "git://git.tuxfamily.org/gitroot/non/fltk.git"
 	 UPDATE_COMMAND ""
 	 BUILD_IN_SOURCE 1
-	 CONFIGURE_COMMAND ./configure
+	 CONFIGURE_COMMAND ./waf configure --enable-gl
 	 --prefix=${CMAKE_CURRENT_BINARY_DIR}/Prereqs
+	 BUILD_COMMAND ./waf build
+	 INSTALL_COMMAND ./waf install
 	 )
 
   ExternalProject_add(libmad
@@ -159,4 +168,5 @@ ${PREREQ_PREFIX}
 -DPaulStretch_SUPERBUILD:BOOLEAN=OFF
 ${platform_flags}
 ${PAULSTRETCH_DEPENDENCIES}
+BUILD_COMMAND LD_LIBRARY_PATH=${CMAKE_CURRENT_BINARY_DIR}/Prereqs/lib make
 )
