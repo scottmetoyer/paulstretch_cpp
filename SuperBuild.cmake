@@ -14,8 +14,8 @@ include(ExternalProject)
 if(APPLE)
 # need to do a 32-bit build because of FLTK needing Carbon
 set(platform_flags -DCMAKE_OSX_ARCHITECTURES:STRING=i386
--DCMAKE_C_FLAGS:STRING=-m32;-O2
--DCMAKE_CXX_FLAGS:STRING=-m32;-O2)
+-DCMAKE_C_FLAGS:STRING=-m32;
+-DCMAKE_CXX_FLAGS:STRING=-m32;)
 endif()
 if(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 set(platform_flags -DBUILD_SHARED_LIBS:BOOL=OFF)
